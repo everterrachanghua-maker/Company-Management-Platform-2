@@ -101,7 +101,7 @@ const App: React.FC = () => {
     }
 
     // 若不是管理員，才跳出金鑰詢問
-    const adminKey = "123456"; 
+    const adminKey = "60628972"; 
     const input = prompt("請輸入管理員金鑰：");
     if (input === adminKey) {
       setView(targetView as any); 
