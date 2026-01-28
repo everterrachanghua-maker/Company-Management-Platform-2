@@ -93,6 +93,14 @@ const App: React.FC = () => {
 
   // --- 5. 管理員金鑰驗證 ---
   const handleVerifyAdmin = (targetView: string) => {
+    // 【修正內容】：如果目前登入者是管理員，直接進入，不問金鑰
+    if (currentUser?.role === UserRole.ADMIN) {
+      setView(targetView as any); 
+      setIsMobileMenuOpen(false);
+      return;
+    }
+
+    // 若不是管理員，才跳出金鑰詢問
     const adminKey = "123456"; 
     const input = prompt("請輸入管理員金鑰：");
     if (input === adminKey) {
@@ -194,7 +202,7 @@ const App: React.FC = () => {
   return (
     <div className="flex h-screen bg-slate-50 overflow-hidden relative">
       
-      {/* 側邊欄：包含手機版開關狀態 */}
+      {/* 1. 側邊欄：包含手機版開關狀態 */}
       <Sidebar 
         onAddSchedule={() => { 
           setEditingSchedule(undefined); 
@@ -210,7 +218,7 @@ const App: React.FC = () => {
       
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         
-        {/* 標題列 */}
+        {/* 2. 標題列 */}
         <Header 
           user={currentUser} 
           onLogout={handleLogout} 
@@ -287,7 +295,7 @@ const App: React.FC = () => {
         </main>
       </div>
 
-      {/* 彈出表單 (Modal) */}
+      {/* 3. 彈出表單 (Modal) */}
       {isFormOpen && (
         <ScheduleForm
           onClose={() => setIsFormOpen(false)}
